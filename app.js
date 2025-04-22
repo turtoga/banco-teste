@@ -18,5 +18,5 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(emailRoutes);
 
 app.listen(port, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${port}`);
+  console.log(`Servidor rodando em http://localhost:${port}`);
 });
