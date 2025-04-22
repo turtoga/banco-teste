@@ -8,10 +8,13 @@ const app = express();
 const port = 3000;
 
 connectDB();
-
 app.use(express.json());
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.get('/', (req, res) => {
+  res.send('Hey, this is a node server!');
+});
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(emailRoutes);
 
 app.listen(port, () => {

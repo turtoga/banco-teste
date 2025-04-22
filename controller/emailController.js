@@ -1,6 +1,6 @@
 const Email = require('../models/email');
 
-exports.sendEmail = async (req, res) => {
+async function sendEmail(req, res) {
   const { email } = req.body;
 
   if (!email) {
@@ -13,7 +13,14 @@ exports.sendEmail = async (req, res) => {
   }
 
   try {
-    // Salva o email no MongoDB
+    // Verifica se o email já existe no banco
+    const existingEmail = await Email.findOne({ email });
+
+    if (existingEmail) {
+      return res.status(400).json({ error: 'Este e-mail já está registrado' });
+    }
+
+    // Salva o novo email no MongoDB
     const newEmail = new Email({ email });
     await newEmail.save();
 
@@ -22,4 +29,6 @@ exports.sendEmail = async (req, res) => {
     console.error(error);
     return res.status(500).json({ error: 'Erro ao salvar o email no banco de dados.' });
   }
-};
+}
+
+module.exports = { sendEmail};
